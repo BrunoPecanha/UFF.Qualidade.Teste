@@ -23,7 +23,7 @@
     };
   });
 
-  // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+  // Impedir que o wrapper de conteúdo role quando a navegação lateral fixa parou sobre
   $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
     if ($(window).width() > 768) {
       var e0 = e.originalEvent,
@@ -60,7 +60,7 @@ $('#dataTable').on('click', 'tbody tr', function(event) {
 
 // Alterna o modal de inclusão quando ocorre edição do registro
 var alternarOperacaoNovoOuEdicao = function(event, op, descricao) {  
-    
+  debugger
   var elemento = document.getElementById(event);
   if (op === 'edit') {    
     elemento.innerHTML = "Editar " + descricao;
@@ -69,12 +69,20 @@ var alternarOperacaoNovoOuEdicao = function(event, op, descricao) {
   }
 }
 
-function carregarDadosEdicao(event, op, descricao, listParams, listValores) {  
+function carregarDadosEdicao(event, op, descricao, listParams, listValores) { 
     debugger
    for (var i = 0; i < listParams.length; i++) {
-         document.getElementById(listParams[i]).value = (op == 'edit') ? listValores[i] : '';
-    }
-    
+       if (event == 'usuarioModalLabel' && i == 4)
+           document.getElementById(listParams[i]).checked = listValores[i] == 'S' ? true : false
+        else if (listParams[i] == "operacao"){
+            if (listValores[i] == "C"){
+                document.getElementById("credito").checked = true; 
+            }
+            else
+                document.getElementById("debito").checked = true; 
+        }
+        else
+             document.getElementById(listParams[i]).value = (op == 'edit' || op == 'delete') ? listValores[i] : '';   }
     alternarOperacaoNovoOuEdicao(event, op, descricao);  
 }
 
@@ -89,7 +97,7 @@ function permiteSoNumeros(evt) {
 //Função que formata o CPF via REGEX
 function formatarCPF(evt){  
   var elemento = document.getElementById(evt);
-  if (elemento.value.length == 11) {
+  if (elemento.value.length === 11) {
     const cpf = document.querySelector('#' + evt);    
     let value = cpf.value.replace(/^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/, "$1.$2.$3-$4");        
     cpf.value = value;  

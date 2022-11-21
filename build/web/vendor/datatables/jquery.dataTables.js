@@ -5536,8 +5536,7 @@
 	 *  @memberof DataTable#oApi
 	 */
 	function _fnCalculateColumnWidths ( oSettings )
-	{
-		debugger
+	{		
 		var
 			table = oSettings.nTable,
 			columns = oSettings.aoColumns,
@@ -5611,8 +5610,7 @@
 				.append( $(oSettings.nTFoot).clone() );
 	
 			// Remove any assigned widths from the footer (from scrolling)
-			tmpTable.find('tfoot th, tfoot td').css('width', '');
-			debugger
+			tmpTable.find('tfoot th, tfoot td').css('width', '');			
 			// Apply custom sizing to the cloned header
 			headerCells = _fnGetUniqueThs( oSettings, tmpTable.find('thead')[0] );
 	

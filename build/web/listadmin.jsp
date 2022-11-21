@@ -12,7 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Financeiro - UFF - Usuários</title>
+        <title>Financeiro - UFF - Administradores</title>
 
         <!-- Fontes personalizados para o template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,19 +32,21 @@
     <body id="page-top">
         <!-- Container principal da página -->
         <div id="wrapper">
-           <!-- Barra lateral -->
-           <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+           <!-- Barra de menu lateral -->      
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Barra lateral - Logo Uff -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.jsp">
                 <div class="sidebar-brand-icon">
                     <img src="img/logouffbranco.png" alt="Logo UFF" width="50" height="50">
                 </div>
             </a>
+
             <!-- Divisor -->
             <hr class="sidebar-divider my-0">
+
             <!-- Item em negrito - Painel de controle -->
             <li class="nav-item active">
-                <a class="nav-link" href="home.html">
+                <a class="nav-link" href="home.jsp">
                     <i class="fas fa-tasks"></i>
                     <span>Painel de Controle</span></a>
             </li>
@@ -52,14 +54,13 @@
             <!-- Divisor -->
             <hr class="sidebar-divider">
 
-            <!-- Menu -->
-            <div class="sidebar-heading">
-                Área Admin
-            </div>
-
-              <!-- Nav Item - Lançamentos -->
-              <li class="nav-item">
-                <a class="nav-link" href="categorias.html">
+        <!-- Menu Admin -->
+        <div id="gerenciamentoadmin" style="${adm}">
+        <div class="sidebar-heading">
+            Área Admin
+        </div>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/CategoriaController?action=listcateogoria&id=${sessionScope.idUsuarioLogado}&session=${sessionScope.usuarioLogado.nome}">
                     <i class="fas fa-sitemap"></i>
                     <span>Categorias</span></a>
             </li>
@@ -75,36 +76,39 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gerenciamentos</h6>
-                        <a class="collapse-item" href="usuario.html">Usuários</a>      
-                        <a class="collapse-item" href="administradores.html">Administradores</a>                                 
+                        <a class="collapse-item" href="${pageContext.request.contextPath}/UsuarioController?action=listusuario">Usuários</a>      
+                       <a class="collapse-item" href="${pageContext.request.contextPath}/AdminController?action=listadmin">Administradores</a>                                
                     </div>
                 </div>
             </li>
-
             <!-- Divisor -->
             <hr class="sidebar-divider">
-
+        </div>
+                    
             <!-- Cabeçalho -->
-            <div class="sidebar-heading">               
-                <span>Gerenciar Conta</span>
-            </div>            
+            <div id="menuusuario" style="${usu}">
+                <div class="sidebar-heading">               
+                    <span>Gerenciar Conta</span>
+                </div>            
 
-            <!-- Nav Item - Conta corrente -->
-            <li class="nav-item">
-                <a class="nav-link" href="conta.html">
-                    <i class="fas fa-university"></i>
-                    <span>Conta Corrente</span></a>
-            </li>
+               <!-- Nav Item - Conta corrente -->
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ContaController?action=listconta&id=${sessionScope.idUsuarioLogado}&session=${sessionScope.usuarioLogado.nome}">
+                        <i class="fas fa-university"></i>
+                        <span>Conta Corrente</span></a>
+                </li>
 
-            <!-- Nav Item - Lançamentos -->
-            <li class="nav-item">
-                <a class="nav-link" href="lancamentos.html">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span>Lançamentos</span></a>
-            </li>
+               <!-- Nav Item - Lançamentos -->
+                <li class="nav-item">
+                     <a class="nav-link" href="${pageContext.request.contextPath}/LancamentoController?action=listLancamento&id=${sessionScope.idUsuarioLogado}&session=${sessionScope.usuarioLogado.nome}">            
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Lançamentos</span>
+                     </a>
+                </li>
 
-            <!-- Divisor -->
-            <hr class="sidebar-divider d-none d-md-block">
+                <!-- Divisor -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </div> 
 
            <!-- Botao para recolher menu lateal -->
             <div class="text-center d-none d-md-inline">
@@ -113,7 +117,6 @@
 
         </ul>
         <!-- Fim da barra lateral -->
-
             <!-- Conteuúdo do container -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <!-- Conteúdo principal -->
@@ -136,7 +139,7 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bruno Peçanha</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.usuarioLogado.nome}</span>
                                     <img class="img-profile rounded-circle"
                                         src="img/undraw_profile.svg">
                                 </a>
@@ -203,22 +206,20 @@
                                     <tbody>                                       
                                         <c:forEach items="${admins}" var="admin">
                                             <tr>
-                                                <td><c:out value="${admin.id}" /></td>
+                                                <td><c:out value="${admin.id}" /></td>                                                
                                                 <td><c:out value="${admin.nome}" /></td>
                                                 <td><c:out value="${admin.CPF}" /></td>
                                                 <td><c:out value="${admin.senha}" /></td>
                                                 <td> 
                                                     <div class="text-center">
-                                                        <a href="#" onclick="carregarDadosEdicao('adminModalLabel', 'edit', 'Administrador', ['nomeAdmin', 'cpfInput', 'senhaAdmin'], [ '<c:out value='${admin.nome}'/>', '<c:out value='${admin.CPF}'/>', <c:out value='${admin.senha}'/>])" data-toggle="modal" data-target="#adminModal">
+                                                        <a href="#" onclick="carregarDadosEdicao('adminModalLabel', 'edit', 'Administrador', ['id', 'nomeAdmin', 'cpfInput', 'senhaAdmin'], [ '<c:out value='${admin.id}'/>', '<c:out value='${admin.nome}'/>', '<c:out value='${admin.CPF}'/>', <c:out value='${admin.senha}'/>])" data-toggle="modal" data-target="#adminModal">
                                                                 <i class="fas fa-1x fa-edit pr-1"></i>                       
                                                         </a>
-                                                        <a href="#" data-toggle="modal" data-target="#exclusaoModal">
+                                                        <a href="#" data-toggle="modal" onclick="carregarDadosEdicao('adminModalLabel', 'delete', 'Administrador', ['id_exclusao'], [ '<c:out value='${admin.id}'/>'])"   data-target="#exclusaoModal">
                                                                 <i class="fas fa-1x fa-trash-alt"></i>                    
                                                         </a>
                                                     </div>                                                           
-                                                </td>    
-                                               <!-- <td><a href="UserController?action=edit&userId=<c:out value="${admin.id}"/>">Update</a></td>
-                                                <td><a href="UserController?action=delete&userId=<c:out value="${admin.id}"/>">Delete</a></td>-->												
+                                                </td>                                                  						
                                             </tr>
                                         </c:forEach>                                                                        
                                     </tbody>
@@ -231,15 +232,15 @@
                 </div>
                 <!-- Fim do conteúdo principal -->
 
-                <!-- Rodapé -->
-                <footer class="sticky-footer  bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Desenvolvimento Web - 2021.2<br>Alunos: Bruno Martins Peçanha | Allan Breno</span>
-                        </div>
+            <!-- Footer -->
+            <footer class="sticky-footer  bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; UFF - Universidade Federal Fluminense<br>Qualidade e Teste - 2022.2</span>
                     </div>
-                </footer>
-                <!-- Fim do rodapé -->
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
             </div>
             <!-- Fim do container do conteúdo -->
@@ -265,7 +266,7 @@
                     <div class="modal-body">Tem certeza que deseja sair?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-primary" href="login.html">Sair</a>
+                         <a class="btn btn-primary" href="${pageContext.request.contextPath}/AutenticacaoController?deslogar=sim">Sair</a>
                     </div>
                 </div>
             </div>
@@ -285,84 +286,86 @@
                     </div>
                     <!-- Corpo do modal -->
                     <div class="modal-body">                    
-                        <form class="row g-3 needs-validation" novalidate>
-                            <div class="col-md-4">
-                              <label for="nomeValicacao" class="form-label">Nome</label>
-                              <input type="text" class="form-control" id="nomeAdmin" required>                          
+                        <form class="row g-3 needs-validation" method="post" action="${pageContext.request.contextPath}/AdminController?action=salvar">
+                            <div class="col-md-4 form-group">
+                              <label for="nomeValicacao" class="form-label">Nome</label>                              
+                              <input  name="id_admin" class="form-control" type="hidden" value="<c:out value="${admin.id}"/>" id="id">                          
+                              <input  required="required" name="nome" type="text" class="form-control" value="<c:out value="${admin.nome}" />" id="nomeAdmin" required>                          
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-5 form-group">
                               <label for="cpfValidacao" class="form-label">CPF</label>
-                              <input type="text" id="cpfInput" class="form-control" onblur="formatarCPF('cpfInput')" maxlength="11" onkeypress="return permiteSoNumeros(event)" required>                         
+                              <input name="CPF" value="<c:out value="${admin.CPF}" />" type="text" id="cpfInput" class="form-control" onblur="formatarCPF('cpfInput')" maxlength="11" onkeypress="return permiteSoNumeros(event)" required>                         
                             </div>     
-                            <div class="col-md-3">
+                            <div class="col-md-3 form-group">
                                 <label for="senhaValidacao" class="form-label">Senha</label>
-                                <input type="password" class="form-control" id="senhaAdmin" required>                         
-                            </div>               
+                                <input name="senha" type="password" value="<c:out value="${admin.senha}" />" class="form-control" id="senhaAdmin" required>                                                         
+                            </div>   
+                            <div class="modal-footer" style="padding-left: 60%">
+                                <button id="gravar" class="btn btn-primary" value="Submit" type="submit">Gravar</button>
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                   
+                            </div>  
                         </form>             
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Gravar</button>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                   
-                    </div>                
+                                  
                 </div>
             </div>
         </div>
         <!--Fim modal de criação de administradores -->
 
         <!-- Modal de informações de usuários -->
-        <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
-        aria-hidden="true">
-           <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                   <div class="modal-header">
-                       <h5 class="modal-title" id="usuarioModalLabel">Informações do usuário logado</h5>
-                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">×</span>
-                       </button>
-                   </div>
-                   <!-- Corpo do modal -->
-                   <div class="modal-body">                    
-                       <form class="row g-3 needs-validation" novalidate>
-                           <div class="col-md-6">
-                             <label for="nomeValicacao" class="form-label">Nome</label>
-                             <label class="text-primary" for="nomeValicacao">Bruno Martins Peçanha</label>                          
-                           </div>
-                           <div class="col-md-5">
-                             <label class="form-label">CPF</label>
-                             <label class="text-primary" class="form-label">123.554.654-88</label>
-                           </div>
-                           <div class="col-md-5">
-                             <label class="form-check-label" class="text-primary" for="invalidCheck">Suspenso: <span class="text-primary">Não</span></label>
-                           </div>  
-                       </form>             
-                   </div>
-                   <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit" data-dismiss="modal">Okay</button>                               
-                   </div>                 
-               </div>
-           </div>
-       </div>
-       <!--Fim modal de informações de administradores -->
+   <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+   aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="usuarioModalLabel">Informações do usuário logado</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <!-- Corpo do modal -->
+              <div class="modal-body">                    
+                  <form class="row g-3 needs-validation" novalidate>
+                      <div class="col-md-6">
+                        <label for="nomeValicacao" class="form-label">Nome</label>
+                        <label class="text-primary" for="nomeValicacao">${sessionScope.usuarioLogado.nome}</label>                          
+                      </div>
+                      <div class="col-md-5">
+                        <label class="form-label">CPF</label>
+                        <label class="text-primary" class="form-label">${sessionScope.cpf}</label>
+                      </div>                     
+                  </form>             
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit" data-dismiss="modal">Ok</button>                               
+              </div>                
+          </div>
+      </div>
+  </div>
+  <!--Fim modal de informações do usuario logado -->
 
         <!-- Modal de exclusão -->
         <div class="modal fade" id="exclusaoModal" tabindex="-1" role="dialog" aria-labelledby="exclusaoModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exclusaoModalLabel">Excluir Administrador</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Tem certeza que deseja excluir?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-primary" href="#" type="button" data-dismiss="modal">Confirmar</button>
+            <div class="modal-dialog" role="document">
 
-                </div>
+                    <div class="modal-content">    
+                        <form method="post" action="${pageContext.request.contextPath}/AdminController?action=delete">                            
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exclusaoModalLabel">Excluir Administrador</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Tem certeza que deseja excluir?</div>
+                            <input  name="id_exclusao" class="form-control" type="hidden"  value="<c:out value="${admin.id}"/>" id="id_exclusao">   
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-primary"  value="Submit" type="submit">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
             </div>
-        </div>
         </div>
         <!--Fim do Modal de exclusão --> 
 

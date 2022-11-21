@@ -2,19 +2,19 @@ package controller;
 
 import dao.AdministradorDao;
 import java.io.IOException;
-
+import static java.lang.Integer.parseInt;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Administrador;
 
 
 @WebServlet(name = "Admins", urlPatterns = {"/AdminController"})
-public class AdminController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private static String INSERT_OR_EDIT = "/admin.jsp";
+public class AdminController extends HttpServlet {        
     private static String LIST_ADMIN = "/listadmin.jsp";
     private AdministradorDao dao;
 
@@ -23,63 +23,52 @@ public class AdminController extends HttpServlet {
         dao = new AdministradorDao();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String forward= "";
-        String action = request.getParameter("action");
-
-        if (action.equalsIgnoreCase("delete")){
-            int id = Integer.parseInt(request.getParameter("id"));
-           // dao.deleteUser(id);
-          //  forward = LIST_USER;
-          //  request.setAttribute("admins", dao.getAllUsers());    
-        } else if (action.equalsIgnoreCase("edit")){
-          //  forward = INSERT_OR_EDIT;
-         //   int id = Integer.parseInt(request.getParameter("id"));
-         //   Administrador admin = dao.Recuperar(1, 15);
-          //  request.setAttribute("admin", admin);
-        } else if (action.equalsIgnoreCase("listadmin")){
-            forward = LIST_ADMIN;
-            request.setAttribute("admins", dao.Recuperar(1, 15));
-        } else {
-            forward = INSERT_OR_EDIT;
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {    
+        HttpSession session = request.getSession(true);   
+        String sessaoValida = request.getParameter("session");        
+        String deslogou = request.getParameter("deslogar");
+        
+        if ("sim".equals(deslogou)){
+            session.invalidate();
+            request.getRequestDispatcher("login.jsp").forward(request, response);     
+            
+        } else if ("".equals(sessaoValida)){
+            session.invalidate();
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-
-        RequestDispatcher view = request.getRequestDispatcher(forward);
-        view.forward(request, response);
+        else {
+            RequestDispatcher view = request.getRequestDispatcher(LIST_ADMIN);
+            request.setAttribute("admins", dao.Recuperar(1, 15));
+            view.forward(request, response);
+        }
     }
 
- /*  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = new User();
-        user.setFirstName(request.getParameter("firstName"));
-        user.setLastName(request.getParameter("lastName"));
-        try {
-            Date dob=null;
-            String teste = request.getParameter("dob");
-            System.out.println(teste);
-            if(request.getParameter("dob")!=null){
-                dob = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dob"));
-            }
-            else{
-                dob = null;
-            }
-                
-            user.setDob(dob);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        
+        String acao = request.getParameter("action");           
+        
+        if (acao.equalsIgnoreCase("salvar")){            
+            try {
+                String adminId = request.getParameter("id_admin");
+
+                if(adminId == null || adminId.isEmpty()) {
+                    dao.Salvar(new Administrador(request.getParameter("nome"), request.getParameter("CPF"), request.getParameter("senha")));
+                }
+                else {
+                    dao.Salvar(new Administrador(parseInt(adminId), request.getParameter("nome"), request.getParameter("CPF"), request.getParameter("senha")));                       
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            } 
         }
-        user.setEmail(request.getParameter("email"));
-        String userid = request.getParameter("userid");
-        if(userid == null || userid.isEmpty())
-        {
-            dao.addUser(user);
-        }
-        else
-        {
-            user.setUserid(Integer.parseInt(userid));
-            dao.updateUser(user);
-        }
-        RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
-        request.setAttribute("users", dao.getAllUsers());
+        else if (acao.equalsIgnoreCase("delete")){
+           int id = Integer.parseInt(request.getParameter("id_exclusao"));
+           dao.Deletar(id);                        
+       }
+        
+        RequestDispatcher view = request.getRequestDispatcher(LIST_ADMIN);
+        request.setAttribute("admins", dao.Recuperar(1, 15));
         view.forward(request, response);
-    }*/
+    }
 }

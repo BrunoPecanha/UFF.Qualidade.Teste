@@ -15,13 +15,60 @@ public class AdministradorDao implements IAdministradorDao {
     
     public AdministradorDao() {
         contexto = financeiroContext.getConnection();
-    }            
+    }      
+    
+    
+    public Administrador Recuperar(int id) {  
+        Administrador admin = null;
+        try {
+            PreparedStatement ppStatment = contexto.prepareStatement("select * from administradores where id=?");            
+            ppStatment.setInt(1, id);
             
+            ResultSet regitro = ppStatment.executeQuery();
+            
+            if (regitro.next()) {                
+                int _id = regitro.getInt("id");
+                String nome = regitro.getString("nome");
+                String _cpf = regitro.getString("cpf");
+                String _senha = regitro.getString("senha");  
+                admin = new Administrador(_id, nome, _cpf, _senha);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return admin;
+    } 
+            
+    public Administrador Recuperar(String cpf, String senha) {  
+        Administrador admin = null;
+        try {
+            PreparedStatement ppStatment = contexto.prepareStatement("select * from administradores where cpf=? and senha=?");
+            
+            ppStatment.setString(1, cpf);
+            ppStatment.setString(2, senha);
+            
+            ResultSet regitro = ppStatment.executeQuery();
+            
+            if (regitro.next()) {                
+                int id = regitro.getInt("id");
+                String nome = regitro.getString("nome");
+                String _cpf = regitro.getString("cpf");
+                String _senha = regitro.getString("senha");  
+                admin = new Administrador(id, nome, _cpf, _senha);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return admin;
+    } 
+    
+    
     @Override
     public List<Administrador> Recuperar(int paginaAtual, int qtdRegistros) {  
         int deslocamento = qtdRegistros * (paginaAtual -1);        
         
-        List<Administrador> listaAdmins = new ArrayList<Administrador>();
+        // Professor, a ideia era paginas, mas a gente resolveu não criar mais essa complexidade, porém a ideia nós deixamos aqui.
+        List<Administrador> listaAdmins = new ArrayList();
         try {
             PreparedStatement ppStatment = contexto.prepareStatement("SELECT *" +
                                   "FROM administradores\n" +
@@ -47,32 +94,47 @@ public class AdministradorDao implements IAdministradorDao {
         }
 
         return listaAdmins;
-    }
-
-    @Override
-    public Administrador Recuperar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    }   
+    
     @Override
     public void Salvar(Administrador adm) {
-        try {
-           PreparedStatement ppStatment = contexto
-           .prepareStatement("insert into administradores(nome, cpf, senha) values (?,?,?)");
+        try {            
+            if (adm.getId() == 0) {
+                 PreparedStatement ppStatment = contexto
+                    .prepareStatement("insert into administradores(nome, cpf, senha) values (?,?,?)");
            
-            ppStatment.setString(1, adm.getNome());
-            ppStatment.setString(2, adm.getCPF());
-            ppStatment.setString(2, adm.getSenha());
-            ppStatment.executeUpdate();
+                ppStatment.setString(1, adm.getNome());
+                ppStatment.setString(2, adm.getCPF());
+                ppStatment.setString(3, adm.getSenha());
+                ppStatment.executeUpdate();
+            }
+            else {
+                PreparedStatement preparedStatement = contexto
+                    .prepareStatement("update administradores set nome=?, cpf=?, senha=? where id=?");
+            
+                preparedStatement.setString(1, adm.getNome());
+                preparedStatement.setString(2, adm.getCPF());         
+                preparedStatement.setString(3, adm.getSenha());
+                preparedStatement.setInt(4, adm.getId());
+                preparedStatement.executeUpdate();
+          }
         }
         catch(SQLException e) {
-            
+            e.printStackTrace();
         }
     }
 
     @Override
     public void Deletar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+         try {
+            PreparedStatement preparedStatement = contexto
+                    .prepareStatement("delete from administradores where id=?");
+           
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
 }
