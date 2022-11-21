@@ -1,0 +1,387 @@
+<%@page  language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Financeiro - UFF - Usuários</title>
+
+        <!-- Fontes personalizados para o template -->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+        <!-- Estilos personalizados para o template -->
+        <link href="css/financeiro.css" rel="stylesheet">
+
+        <!-- Estilos personalizados para esta página -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">    
+
+    </head>
+
+    <body id="page-top">
+        <!-- Container principal da página -->
+        <div id="wrapper">
+           <!-- Barra lateral -->
+           <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Barra lateral - Logo Uff -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
+                <div class="sidebar-brand-icon">
+                    <img src="img/logouffbranco.png" alt="Logo UFF" width="50" height="50">
+                </div>
+            </a>
+            <!-- Divisor -->
+            <hr class="sidebar-divider my-0">
+            <!-- Item em negrito - Painel de controle -->
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html">
+                    <i class="fas fa-tasks"></i>
+                    <span>Painel de Controle</span></a>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider">
+
+            <!-- Menu -->
+            <div class="sidebar-heading">
+                Área Admin
+            </div>
+
+              <!-- Nav Item - Lançamentos -->
+              <li class="nav-item">
+                <a class="nav-link" href="categorias.html">
+                    <i class="fas fa-sitemap"></i>
+                    <span>Categorias</span></a>
+            </li>
+
+            <!-- Item de navegação - Funcionalidades do menu colapsado -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Gerenciar Acessos</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gerenciamentos</h6>
+                        <a class="collapse-item" href="usuario.html">Usuários</a>      
+                        <a class="collapse-item" href="administradores.html">Administradores</a>                                 
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider">
+
+            <!-- Cabeçalho -->
+            <div class="sidebar-heading">               
+                <span>Gerenciar Conta</span>
+            </div>            
+
+            <!-- Nav Item - Conta corrente -->
+            <li class="nav-item">
+                <a class="nav-link" href="conta.html">
+                    <i class="fas fa-university"></i>
+                    <span>Conta Corrente</span></a>
+            </li>
+
+            <!-- Nav Item - Lançamentos -->
+            <li class="nav-item">
+                <a class="nav-link" href="lancamentos.html">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Lançamentos</span></a>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+           <!-- Botao para recolher menu lateal -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- Fim da barra lateral -->
+
+            <!-- Conteuúdo do container -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Conteúdo principal -->
+                <div id="content">
+                    <!-- Barra superior -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <!-- Alternância da barra lateral (Barra superior) -->
+                        <form class="form-inline">
+                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                        </form>                    
+
+                        <!-- Navegação da barra superior -->
+                        <ul class="navbar-nav ml-auto">       
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
+                            <!-- Item de navegação - Informações do usuário -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bruno Peçanha</span>
+                                    <img class="img-profile rounded-circle"
+                                        src="img/undraw_profile.svg">
+                                </a>
+                                <!-- Dropdown - Informações do usuário -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#perfilModal">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Perfil
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Sair
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Fim da barra superior  -->
+
+                     <!-- Inicio do conteúdo da página -->
+                     <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h1 class="h3 mb-2 text-gray-800">Administradores</h1>
+                                <p class="mb-4">Área para o lançamentos de débitos e créditos.</p> 
+                            </div>
+                            <div class="col-md-1">
+                                <a href="#" onclick="carregarDadosEdicao('adminModalLabel', 'novo', 'Administrador', ['nomeAdmin', 'cpfInput', 'senhaAdmin'])" data-toggle="modal" data-target="#adminModal">
+                                    <i class="fas fa-4x fa-plus-circle"></i>                         
+                                </a>
+                                Adicionar
+                            </div>                                        
+                        </div>            
+
+                    <!-- Table mockado para exemplo -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Área Admin > Gerenciar Acessos > Administradores</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nome</th>
+                                            <th>CPF</th>
+                                            <th>Senha</th>   
+                                            <th></th>                                                                    
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nome</th>
+                                            <th>CPF</th>
+                                            <th>Senha</th>   
+                                            <th></th>                                       
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>                                       
+                                        <c:forEach items="${admins}" var="admin">
+                                            <tr>
+                                                <td><c:out value="${admin.id}" /></td>
+                                                <td><c:out value="${admin.nome}" /></td>
+                                                <td><c:out value="${admin.CPF}" /></td>
+                                                <td><c:out value="${admin.senha}" /></td>
+                                                <td> 
+                                                    <div class="text-center">
+                                                        <a href="#" onclick="carregarDadosEdicao('adminModalLabel', 'edit', 'Administrador', ['nomeAdmin', 'cpfInput', 'senhaAdmin'], [ '<c:out value='${admin.nome}'/>', '<c:out value='${admin.CPF}'/>', <c:out value='${admin.senha}'/>])" data-toggle="modal" data-target="#adminModal">
+                                                                <i class="fas fa-1x fa-edit pr-1"></i>                       
+                                                        </a>
+                                                        <a href="#" data-toggle="modal" data-target="#exclusaoModal">
+                                                                <i class="fas fa-1x fa-trash-alt"></i>                    
+                                                        </a>
+                                                    </div>                                                           
+                                                </td>    
+                                               <!-- <td><a href="UserController?action=edit&userId=<c:out value="${admin.id}"/>">Update</a></td>
+                                                <td><a href="UserController?action=delete&userId=<c:out value="${admin.id}"/>">Delete</a></td>-->												
+                                            </tr>
+                                        </c:forEach>                                                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <!-- Fim da Table mockado para exemplo -->
+                </div>
+                <!-- Fim do conteúdo principal -->
+
+                <!-- Rodapé -->
+                <footer class="sticky-footer  bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Desenvolvimento Web - 2021.2<br>Alunos: Bruno Martins Peçanha | Allan Breno</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Fim do rodapé -->
+
+            </div>
+            <!-- Fim do container do conteúdo -->
+        </div>
+        <!-- Fim do Container principal da página -->
+
+        <!--Botão para rolagem para o topo -->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Modal de Logout-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="sairModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sair</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Tem certeza que deseja sair?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-primary" href="login.html">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fim do Modal de Logout -->
+
+         <!-- Modal de criação de administradores -->
+         <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalLabel"
+         aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="adminModalLabel">Cadastro de Administradores</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <!-- Corpo do modal -->
+                    <div class="modal-body">                    
+                        <form class="row g-3 needs-validation" novalidate>
+                            <div class="col-md-4">
+                              <label for="nomeValicacao" class="form-label">Nome</label>
+                              <input type="text" class="form-control" id="nomeAdmin" required>                          
+                            </div>
+                            <div class="col-md-5">
+                              <label for="cpfValidacao" class="form-label">CPF</label>
+                              <input type="text" id="cpfInput" class="form-control" onblur="formatarCPF('cpfInput')" maxlength="11" onkeypress="return permiteSoNumeros(event)" required>                         
+                            </div>     
+                            <div class="col-md-3">
+                                <label for="senhaValidacao" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="senhaAdmin" required>                         
+                            </div>               
+                        </form>             
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Gravar</button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                   
+                    </div>                
+                </div>
+            </div>
+        </div>
+        <!--Fim modal de criação de administradores -->
+
+        <!-- Modal de informações de usuários -->
+        <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+        aria-hidden="true">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title" id="usuarioModalLabel">Informações do usuário logado</h5>
+                       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">×</span>
+                       </button>
+                   </div>
+                   <!-- Corpo do modal -->
+                   <div class="modal-body">                    
+                       <form class="row g-3 needs-validation" novalidate>
+                           <div class="col-md-6">
+                             <label for="nomeValicacao" class="form-label">Nome</label>
+                             <label class="text-primary" for="nomeValicacao">Bruno Martins Peçanha</label>                          
+                           </div>
+                           <div class="col-md-5">
+                             <label class="form-label">CPF</label>
+                             <label class="text-primary" class="form-label">123.554.654-88</label>
+                           </div>
+                           <div class="col-md-5">
+                             <label class="form-check-label" class="text-primary" for="invalidCheck">Suspenso: <span class="text-primary">Não</span></label>
+                           </div>  
+                       </form>             
+                   </div>
+                   <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" data-dismiss="modal">Okay</button>                               
+                   </div>                 
+               </div>
+           </div>
+       </div>
+       <!--Fim modal de informações de administradores -->
+
+        <!-- Modal de exclusão -->
+        <div class="modal fade" id="exclusaoModal" tabindex="-1" role="dialog" aria-labelledby="exclusaoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exclusaoModalLabel">Excluir Administrador</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Tem certeza que deseja excluir?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" href="#" type="button" data-dismiss="modal">Confirmar</button>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        <!--Fim do Modal de exclusão --> 
+
+        <!-- Javascript principal do bootstrap -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Javascript principal do plugin -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Script personalizado para todas as páginas -->        
+        <script src="js/financeiro.js"></script>
+
+        <!-- Plugins externos -->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Script do plugin externo -->
+        <script src="js/datatables.js"></script>
+    </body>
+</html>
+
