@@ -6,13 +6,13 @@
 
 -- Colocar a descrição
 
-
-
 ## 🚧 Funções de Usuário
 
 - Funções do usuario
 
 ## 🚧 Funções de Admin
+
+- Funções do Administrador
 
 ## ☕ Tecnologias Utilizadas
 
