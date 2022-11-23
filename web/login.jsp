@@ -49,7 +49,15 @@
                                         <button  value="Submit" disabled="true" type="submit" id="btnEntrar" class="btn btn-primary btn-user btn-block">
                                             Entrar
                                         </button>
-                                        <hr>                                       
+                                        <span style="color: red">
+                                        <%
+                                            if(null!=request.getAttribute("errorMessage"))
+                                            {
+                                                out.println(request.getAttribute("errorMessage"));
+                                            }
+                                        %>
+                                        <hr>  
+                                        </span>
                                     </form>  
                                 </div>
                             </div>

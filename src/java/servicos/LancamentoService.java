@@ -1,30 +1,18 @@
 package servicos;
 
-import Infra.financeiroContext;
-import dao.CategoriaDao;
 import dao.ContaDao;
 import dao.LancamentoDao;
 import dto.ResumoDto;
-import java.sql.Connection;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
-import model.Administrador;
-import model.Categoria;
-import model.Conta;
-import model.Lancamento;
 
-public class LancamentoServico  {
-
-    private Connection contexto;
-    private LancamentoDao daoLancamento;
-    private ContaDao daoConta;
+public class LancamentoService  {
+    private final LancamentoDao daoLancamento;
+    private final ContaDao daoConta;
     
-    public LancamentoServico() {
-        contexto = financeiroContext.getConnection();
+    public LancamentoService() {
         daoLancamento = new LancamentoDao();
         daoConta = new ContaDao();       
-    }          
+    }
     
     public ResumoDto CarregarResumoLancamentos(int idUsuario) 
     {  

@@ -4,6 +4,7 @@ import dao.UsuarioDao;
 import dao.AdministradorDao;
 import dto.ResumoDto;
 import java.io.IOException;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Administrador;
 import model.Usuario;
-import servicos.LancamentoServico;
+import servicos.LancamentoService;
 
 
 @WebServlet(name = "Autenticacao", urlPatterns = {"/AutenticacaoController"})
@@ -20,13 +21,13 @@ public class AutenticacaoController extends HttpServlet {
    
     private UsuarioDao daoUsuario;
     private AdministradorDao daoAdmin;
-    private LancamentoServico  servicoLancamento;
+    private LancamentoService  servicoLancamento;
 
     public AutenticacaoController() {
         super();
         daoUsuario = new UsuarioDao();
         daoAdmin = new AdministradorDao();
-        servicoLancamento = new LancamentoServico();
+        servicoLancamento = new LancamentoService();        
     }
     
     @Override
@@ -38,20 +39,22 @@ public class AutenticacaoController extends HttpServlet {
             session.invalidate();
             request.getRequestDispatcher("login.jsp").forward(request, response);                    
         }
-    }
+    }   
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {   
+            HttpSession session = request.getSession(true); 
             String cpf = request.getParameter("cpf");           
             String senha = request.getParameter("senha");   
             
-            if (cpf.isEmpty() || senha.isEmpty()) {
+            if (!Usuario.ValidarParametros(cpf, senha))  {  
+                request.setAttribute("errorMessage", "Nome ou senha inválidos");
+                request.getRequestDispatcher("login.jsp").forward(request, response);  
                 return;
-            }
+            }                
             
             Usuario usuario;
-            Administrador admin = null;
-            HttpSession session = request.getSession(true);    
+            Administrador admin = null;  
 
             usuario = daoUsuario.Recuperar(cpf.replaceAll("\\D", ""), senha);
             if (usuario == null)         
@@ -82,7 +85,8 @@ public class AutenticacaoController extends HttpServlet {
               request.getRequestDispatcher("home.jsp").forward(request, response);
             }          
             else {                      
-                request.getRequestDispatcher("login.jsp").forward(request, response);            
+               request.setAttribute("errorMessage", "Nome ou senha inválidos");
+               request.getRequestDispatcher("login.jsp").forward(request, response);                          
             }          
      }    
 }

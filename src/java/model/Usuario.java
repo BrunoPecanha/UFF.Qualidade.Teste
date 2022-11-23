@@ -16,6 +16,10 @@ public class Usuario {
         this.suspenso = suspenso;
     } 
     
+    public static Boolean ValidarParametros(String cpf, String senha) {
+        return !(cpf.isEmpty() || senha.isEmpty());
+    }
+    
     private int id;
     private String nome; 
     private String cpf;

@@ -16,18 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Lancamento;
-import servicos.LancamentoServico;
+import servicos.LancamentoService;
 
 @WebServlet(name = "Lancamentos", urlPatterns = {"/LancamentoController"})
 public class LancamentoController extends HttpServlet {        
     private static String LIST_LANCAMENTOS = "/listlancamento.jsp";    
     private CategoriaDao daoCategoria;
-    private LancamentoServico lancamentoServico;
+    private LancamentoService lancamentoServico;
     private LancamentoDao daoLancamento;   
     
     public LancamentoController() {
         super();        
-        lancamentoServico = new LancamentoServico();
+        lancamentoServico = new LancamentoService();
         daoCategoria = new CategoriaDao();
         daoLancamento = new LancamentoDao();
     }

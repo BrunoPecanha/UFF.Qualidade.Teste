@@ -325,14 +325,14 @@
                <div class="modal-body">                    
                   <form neme="lancamento" class="row g-3 needs-validation" method="post" action="${pageContext.request.contextPath}/LancamentoController?action=salvar&id=${sessionScope.idUsuarioLogado}&session=${sessionScope.usuarioLogado.nome}">                 
                     <div class="col-md-3">                            
-                        <label for="validationCustom01" class="form-label">Valor</label>
-                        <input type="text" class="form-control" id="valor" name="valor" value="0,00" required>                        
+                        <label for="valorTxt" class="form-label">Valor</label>
+                        <input type="text" class="form-control" id="valor" name="valor" value="" placeholder="0,00"  required>                        
                       </div>
                       <div class="col-md-2">
-                        <label for="validationCustom02" class="form-label">Operação</label>
+                        <label for="operacaoTxt" class="form-label">Operação</label>
                         <div class="form-check"> 
                             <div>
-                                <input value="D" class="form-check-input mr-3" type="radio" name="operacao" id="debito">
+                                <input value="D" class="form-check-input mr-3" type="radio" name="operacao" checked id="debito">
                                 <label class="form-check-label" for="tipoOperacao">
                                 Débito
                                 </label>
@@ -346,9 +346,9 @@
                         </div>          
                       </div>
                       <div class="col-md-3">
-                        <label for="validationCustom04" class="form-label">Conta</label>
-                        <select name="id_conta" id="id_conta">
-                            <option disabled selected>Selecione</option>
+                        <label for="contaTxt" class="form-label">Conta</label>
+                        <select name="id_conta" id="id_conta" required>
+                            <option value="" selected>Selecione</option>
                             <c:forEach  items="${contaslancamento}" var="conta">
                                 <option value="${conta.id}">${conta.descricao}</option>
                             </c:forEach>
@@ -356,8 +356,8 @@
                       </div>  
                       <div class="col-md-1">
                         <label for="validationCustom04" class="form-label">Categoria</label>
-                        <select name="id_categoria"  id="id_categoria">
-                            <option disabled selected>Selecione</option>
+                        <select name="id_categoria"  id="id_categoria" required>
+                            <option value="" selected>Selecione</option>
                             <c:forEach  items="${categoriaslancamento}" var="categoria">
                                 <option value="${categoria.id}">${categoria.descricao}</option>
                             </c:forEach>
@@ -367,7 +367,7 @@
                         <input  name="id_categoria" class="form-control" type="hidden" value="<c:out value="${categoria.id}"/>" id="id"> 
                         <input  name="id_conta" class="form-control" type="hidden" value="<c:out value="${conta.id}"/>" id="id"> 
                         <input  name="id_lancamento" class="form-control" type="hidden" value="<c:out value="${lancamento.id}"/>" id="id_lancamento">
-                        <label for="validationCustom03" class="form-label">Descrição</label>
+                        <label for="descricaoTxt" class="form-label">Descrição</label>
                         <input type="text" class="form-control" id="descricao" name="descricao" required>                      
                       </div>  
                        <div class="modal-footer mt-2" style="padding-left: 60%;">
@@ -486,7 +486,7 @@
  <script>
         $(document).ready(function () {
             $('#processar').click(function () {
-                $.post('${pageContext.request.contextPath}/LancamentoController?action=processar&id=${sessionScope.idUsuarioLogado}')
+                $.post('${pageContext.request.contextPath}/LancamentoController?action=processar&id=${sessionScope.idUsuarioLogado}');
             });
         });
  </script>
