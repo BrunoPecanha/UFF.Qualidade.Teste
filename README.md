@@ -2,29 +2,32 @@
 📄<br>UFF -  Projeto da cadeira de Qualidade e Teste 
 </h1>
 
-## Descrição do jogo
+## Descrição do projeto
 
-O Monopoly é um jogo de tabuleiro clássico adorado por pessoas de todas as idades, mas pode ser difícil aprender a jogar. As regras são complicadas, e muitas famílias têm suas próprias variações que não estão no livreto oficial. Aprender a montar o tabuleiro, jogar com as regras oficiais e terminar o jogo dentro de um prazo razoável são coisas que vão fazer você aprender a amar Monopoly!
+-- Colocar a descrição
 
-Regras -> https://pt.wikihow.com/Jogar-Monopoly
 
-## 🚧 Objetivo
 
-Reproduzir o jogo de forma digital para que seja possível de 2 ou mais, limitado a 8, individuos jogarem. Caso seja somente 1 jogador, poderá ser jogado contra uma versão automática ( CPU )
+## 🚧 Funções de Usuário
+
+- Funções do usuario
+
+## 🚧 Funções de Admin
 
 ## ☕ Tecnologias Utilizadas
 
 HTML; <br />
 CSS; <br />
 JAVASCRIPT; <br />
+JQUERY; <br />
+JAVA <br />
+MYSQL<br />
+
 
 ## 🧑‍💻 Alunos
 
 Bruno Cipriani <br />
 Bruno Peçanha <br />
-Lucas  <br />
-Matheus <br />
-
 
 
 ![image](https://user-images.githubusercontent.com/34428627/148169220-281ccab1-aa57-4ee2-8dc8-56521a99e601.png)
