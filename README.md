@@ -4,15 +4,21 @@
 
 ## Descrição do projeto
 
--- Colocar a descrição
+Aplicação em Java (servlet+jsp) que apoia um usuário 
+no controle de lançamentos de créditos e débitos como uma conta corrente 
+de um banco. Ao acessar a aplicação essa contará com uma área pública 
+(onde informações sobre a aplicação estarão disponíveis) e uma área privada 
+(onde as funções do sistema estão disponíveis)
 
 ## 🚧 Funções de Usuário
 
-- Funções do usuario
+- Criar contas;
+- Criar lançamentos
 
 ## 🚧 Funções de Admin
 
-- Funções do Administrador
+- Criar Categorias
+- Criar usuários;
 
 ## ☕ Tecnologias Utilizadas
 
