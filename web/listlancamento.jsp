@@ -196,7 +196,7 @@
                            </tbody>   
                      </table>
                         <div>                                   
-                            <button id="processar" data-toggle="modal" data-target="#processarModal" class="btn btn-primary"> Processar Lançamentos
+                            <button data-toggle="modal" data-target="#processarModal" class="btn btn-primary"> Processar Lançamentos
                             </button>
                          </div>
                         <br>
@@ -367,11 +367,12 @@
                         <input  name="id_categoria" class="form-control" type="hidden" value="<c:out value="${categoria.id}"/>" id="id"> 
                         <input  name="id_conta" class="form-control" type="hidden" value="<c:out value="${conta.id}"/>" id="id"> 
                         <input  name="id_lancamento" class="form-control" type="hidden" value="<c:out value="${lancamento.id}"/>" id="id_lancamento">
+                         <input  id="token" name="token" class="form-control" type="hidden" value="">
                         <label for="descricaoTxt" class="form-label">Descrição</label>
                         <input type="text" class="form-control" id="descricao" name="descricao" required>                      
                       </div>  
                        <div class="modal-footer mt-2" style="padding-left: 60%;">
-                            <button id="gravar" class="btn btn-primary" value="Submit" type="submit">Gravar</button>
+                            <button id="gravar" class="btn btn-primary" Onclick="" value="Submit" type="submit">Gravar</button>
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                 
                         </div>                    
                    </form>             
@@ -454,7 +455,7 @@
                             <div class="modal-body">Confirma processar os lançamentos pendentes?</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                                <button class="btn btn-primary"  onClick="document.location.reload(true)">Confirmar</button>
+                                <button class="btn btn-primary"  id="processar" onClick="document.location.reload(true)">Confirmar</button>
                             </div>
                     </div>
             </div>
@@ -483,12 +484,25 @@
 </body>
 
 
+
+
  <script>
         $(document).ready(function () {
             $('#processar').click(function () {
                 $.post('${pageContext.request.contextPath}/LancamentoController?action=processar&id=${sessionScope.idUsuarioLogado}');
             });
         });
+              
+         function generateUUID() {
+            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+              (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+        debugger
+        $(document).ready(function () {
+            $('#token').val(generateUUID());
+        });
+        
  </script>
 
 </html>

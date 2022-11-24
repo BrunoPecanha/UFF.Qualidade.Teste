@@ -54,6 +54,25 @@ public class LancamentoDao implements ILancamentoDao {
         return lstLancamentos;
     }   
     
+     @Override
+     public Boolean LancamentoJaExiste(String token) {
+        Boolean existe = false; 
+         
+        try {
+            PreparedStatement ppStatment = contexto.prepareStatement("SELECT * FROM lancamentos where token=?");
+
+            ppStatment.setString(1, token);
+            
+            ResultSet regitro = ppStatment.executeQuery();
+            existe = regitro.next();
+            
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;           
+    }
+    
+    @Override
      public List<Lancamento> RecuperarLancamentosUsuario(int idUsuario) {  
         List<Lancamento> lstLancamentos = new ArrayList();
         try {
@@ -85,21 +104,29 @@ public class LancamentoDao implements ILancamentoDao {
     
     
     @Override
-    public void Salvar(Lancamento lancamento, Boolean ehProcessamento) {
-        try {            
-            if (lancamento.getId() == 0) {
-                 PreparedStatement ppStatment = contexto
-                    .prepareStatement("insert into lancamentos(id_conta, id_categoria, valor, operacao, data, descricao) values (?,?,?,?,?,?)");
+    public void Salvar(Lancamento lancamento, String token) {
+        try {    
+                PreparedStatement ppStatment = contexto
+                    .prepareStatement("insert into lancamentos(id_conta, id_categoria, valor, operacao, data, descricao, token) values (?,?,?,?,?,?,?)");
            
                 ppStatment.setInt(1, lancamento.getContaId());
                 ppStatment.setInt(2, lancamento.getCategoriaId());
                 ppStatment.setDouble(3, lancamento.getValor());
                 ppStatment.setString(4, lancamento.getOperacao());
                 ppStatment.setDate(5, lancamento.getData());
-                ppStatment.setString(6, lancamento.getDescricao());                
+                ppStatment.setString(6, lancamento.getDescricao());   
+                 ppStatment.setString(7, token);
                 ppStatment.executeUpdate();
-            }
-            else if (lancamento.getId() != 0 && !ehProcessamento) {
+           
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void Atualizar(Lancamento lancamento) {
+        try {
                 PreparedStatement ppStatment = contexto
                     .prepareStatement("update lancamentos set id_conta=?, id_categoria=?, valor=?, operacao=?,  data=?, descricao=? where id=?");
                 
@@ -109,10 +136,17 @@ public class LancamentoDao implements ILancamentoDao {
                 ppStatment.setString(4, lancamento.getOperacao());
                 ppStatment.setDate(5, lancamento.getData());
                 ppStatment.setString(6, lancamento.getDescricao());  
-                 ppStatment.setInt(7, lancamento.getId());  
+                ppStatment.setInt(7, lancamento.getId());  
                 ppStatment.executeUpdate();
-            }
-            else {
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+     public void Processar(Lancamento lancamento) {
+        try {                        
                 PreparedStatement ppStatment = contexto
                     .prepareStatement("update lancamentos set id_conta=?, id_categoria=?, valor=?, operacao=?,  data=?, descricao=?, processado=? where id=?");
                 
@@ -125,13 +159,12 @@ public class LancamentoDao implements ILancamentoDao {
                 ppStatment.setString(7, lancamento.getProcessado());   
                 ppStatment.setInt(8, lancamento.getId());   
                 ppStatment.executeUpdate();
-            }
-        }
+        }        
         catch(SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void Deletar(int id) {
          try {

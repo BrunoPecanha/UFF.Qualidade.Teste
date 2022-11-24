@@ -23,13 +23,12 @@ public class LancamentoController extends HttpServlet {
     private static String LIST_LANCAMENTOS = "/listlancamento.jsp";    
     private CategoriaDao daoCategoria;
     private LancamentoService lancamentoServico;
-    private LancamentoDao daoLancamento;   
+  
     
     public LancamentoController() {
         super();        
         lancamentoServico = new LancamentoService();
         daoCategoria = new CategoriaDao();
-        daoLancamento = new LancamentoDao();
     }
 
     @Override
@@ -69,9 +68,27 @@ public class LancamentoController extends HttpServlet {
         }
         else {
             int usuario = parseInt(request.getParameter("id"));
+            String token = request.getParameter("token");
             String acao = request.getParameter("action");           
 
-            if (acao.equalsIgnoreCase("salvar")){            
+            if (acao.equalsIgnoreCase("salvar")){   
+                
+                if (lancamentoServico.LancamentoJaExiste(token)) {
+                    ResumoDto resumo = lancamentoServico.CarregarResumoLancamentos(usuario); // Pegar id do usuario
+
+                    request.setAttribute("debitos", resumo.debitos);
+                    request.setAttribute("creditos",  resumo.creditos);
+                    request.setAttribute("total",  resumo.creditos - resumo.debitos); 
+                    request.setAttribute("lancamentos", resumo.lancamentos);
+                    request.setAttribute("contaslancamento", resumo.contas);
+                    request.setAttribute("categoriaslancamento", daoCategoria.Recuperar(1, 100));
+                    RequestDispatcher view = request.getRequestDispatcher(LIST_LANCAMENTOS);       
+                    view.forward(request, response);
+                    
+                    return;
+                }
+                 
+                
                 try {
                     String lancamentoId = request.getParameter("id_lancamento");
                     String contaId = request.getParameter("id_conta");
@@ -82,10 +99,10 @@ public class LancamentoController extends HttpServlet {
                     Date data = new java.sql.Date(dataAtual);            
 
                     if(lancamentoId == null || lancamentoId.isEmpty()) {
-                        daoLancamento.Salvar(new Lancamento(parseInt(contaId), parseInt(categoriaId), parseDouble(request.getParameter("valor")), request.getParameter("operacao"), data, request.getParameter("descricao")), false);
+                        lancamentoServico.Salvar(new Lancamento(parseInt(contaId), parseInt(categoriaId), parseDouble(request.getParameter("valor")), request.getParameter("operacao"), data, request.getParameter("descricao")), token);
                     }
                     else {
-                        daoLancamento.Salvar(new Lancamento(parseInt(lancamentoId), parseInt(contaId), parseInt(categoriaId), parseDouble(request.getParameter("valor")), operacao, data, request.getParameter("descricao"), null), false);
+                        lancamentoServico.Atualizar(new Lancamento(parseInt(lancamentoId), parseInt(contaId), parseInt(categoriaId), parseDouble(request.getParameter("valor")), operacao, data, request.getParameter("descricao"), null));
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -93,15 +110,10 @@ public class LancamentoController extends HttpServlet {
             }
             else if (acao.equalsIgnoreCase("delete")){
                 int id = Integer.parseInt(request.getParameter("id_exclusao"));
-                daoLancamento.Deletar(id);                         
+                lancamentoServico.Deletar(id);                         
            }            
             else if (acao.equalsIgnoreCase("processar")){
-              List<Lancamento> lancamentos = daoLancamento.RecuperarLancamentosUsuario(usuario); 
-              
-               for (int i = 0; i <= lancamentos.size()-1; i++) {
-                   lancamentos.get(i).processarLancamento();
-                   daoLancamento.Salvar(lancamentos.get(i), true);
-               }
+                lancamentoServico.Processar(usuario);
             }
 
             ResumoDto resumo = lancamentoServico.CarregarResumoLancamentos(usuario); // Pegar id do usuario

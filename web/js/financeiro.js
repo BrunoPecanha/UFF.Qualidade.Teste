@@ -59,18 +59,16 @@ $('#dataTable').on('click', 'tbody tr', function(event) {
 });
 
 // Alterna o modal de inclusão quando ocorre edição do registro
-var alternarOperacaoNovoOuEdicao = function(event, op, descricao) {  
-  debugger
+var alternarOperacaoNovoOuEdicao = function(event, op, descricao) {    
   var elemento = document.getElementById(event);
   if (op === 'edit') {    
     elemento.innerHTML = "Editar " + descricao;
   } else {
     elemento.innerHTML = "Adicionar " + descricao;    
   }
-}
+};
 
-function carregarDadosEdicao(event, op, descricao, listParams, listValores) { 
-    debugger
+function carregarDadosEdicao(event, op, descricao, listParams, listValores) {     
    for (var i = 0; i < listParams.length; i++) {
        if (event == 'usuarioModalLabel' && i == 4)
            document.getElementById(listParams[i]).checked = listValores[i] == 'S' ? true : false
@@ -82,7 +80,7 @@ function carregarDadosEdicao(event, op, descricao, listParams, listValores) {
                 document.getElementById("debito").checked = true; 
         }
         else
-             document.getElementById(listParams[i]).value = (op == 'edit' || op == 'delete') ? listValores[i] : '';   }
+             document.getElementById(listParams[i]).value = (op == 'edit' || op == 'delete') ? listValores[i] : '';   };
     alternarOperacaoNovoOuEdicao(event, op, descricao);  
 }
 

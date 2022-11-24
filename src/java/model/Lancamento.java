@@ -32,6 +32,7 @@ public class Lancamento {
     private Date data;
     private String descricao;
     private String processado;
+    private String token;
     
     
     public String getProcessado() {
@@ -72,6 +73,14 @@ public class Lancamento {
     
     public void setData(Date data) {
         this.data = data;
+    }  
+    
+    public String getToken() {
+        return this.token;
+    }
+    
+    public void setToken(String token) {
+        this.token = token;
     }  
    
      public String getDescricao() {

@@ -41,6 +41,7 @@ CREATE TABLE lancamentos (
     id_categoria INT NOT NULL,
     valor decimal(10,2),
     operacao varchar(1),
+	token varchar(36);,
     data date,
     descricao varchar(100),
 	processado varchar(1) DEFAULT 'N',
