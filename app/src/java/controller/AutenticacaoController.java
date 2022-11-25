@@ -84,9 +84,14 @@ public class AutenticacaoController extends HttpServlet {
 
               request.getRequestDispatcher("home.jsp").forward(request, response);
             }          
-            else {                      
-               request.setAttribute("errorMessage", "Nome ou senha inválidos");
-               request.getRequestDispatcher("login.jsp").forward(request, response);                          
+            else {  
+                if (usuario != null && usuario.getSuspenso().equals("S")) {
+                    request.setAttribute("errorMessage", "Usuário Suspenso. Contacte o admin");
+                    request.getRequestDispatcher("login.jsp").forward(request, response); 
+                }
+                else
+                    request.setAttribute("errorMessage", "Nome ou senha inválidos");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
             }          
      }    
 }
