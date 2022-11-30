@@ -87,8 +87,8 @@ public class Lancamento {
         return this.descricao;
     }
     
-    public void setNDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao.isEmpty() ? this.descricao : descricao;
     }    
     
     public void processarLancamento() {

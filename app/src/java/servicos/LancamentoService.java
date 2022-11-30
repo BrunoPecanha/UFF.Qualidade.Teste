@@ -16,12 +16,18 @@ public class LancamentoService  {
         daoConta = new ContaDao();       
     }
     
-    public ResumoDto CarregarResumoLancamentos(int idUsuario) 
+    public ResumoDto GerarResumoLancamentos(int idUsuario) 
     {  
-        ResumoDto resumo = new ResumoDto();
-        resumo.listaCategoriaXPercentual = new ArrayList(); // Para tela inicial
-        resumo.lancamentos = daoLancamento.RecuperarLancamentosUsuario(idUsuario);      
+        ResumoDto resumo = ProcessarLancamentos(daoLancamento.RecuperarLancamentosUsuario(idUsuario));
+        resumo.listaCategoriaXPercentual = new ArrayList();        
         resumo.contas = daoConta.RecuperarPorUsuario(idUsuario);
+        
+        return resumo;
+    }
+    
+    public ResumoDto ProcessarLancamentos(List<Lancamento> lancamentos) {
+        ResumoDto resumo = new ResumoDto();
+        resumo.lancamentos = lancamentos;            
          
         for (int i = 0; i <= resumo.lancamentos.size()-1; i++) {
             if (resumo.lancamentos.get(i).getOperacao().equals("D") && resumo.lancamentos.get(i).getProcessado().equals("S")){
@@ -32,17 +38,22 @@ public class LancamentoService  {
             }
         }
         return resumo;
-    }
+    }    
     
-    public void Processar(int usuario) {
-         List<Lancamento> lancamentos = daoLancamento.RecuperarLancamentosUsuario(usuario); 
-         
+    public List<Lancamento> GerarBaixaLancamento(List<Lancamento> lancamentos) {         
          for (int i = 0; i <= lancamentos.size()-1; i++) {
                 lancamentos.get(i).processarLancamento();
                 daoLancamento.Processar(lancamentos.get(i));
           }
+         return lancamentos;
     }
     
+    public void ProcessarLancamento(int id) {
+        List<Lancamento> lancamentos = daoLancamento.RecuperarLancamentosUsuario(id); 
+        this.GerarBaixaLancamento(lancamentos);
+    }
+    
+    // Para corrigir um bug de session ao atualizar a tela
     public Boolean LancamentoJaExiste(String token) {
         return daoLancamento.LancamentoJaExiste(token);
     }
@@ -51,11 +62,11 @@ public class LancamentoService  {
         daoLancamento.Salvar(lancamentos, token);
     }
     
-     public void Atualizar(Lancamento lancamentos ) {
+    public void Atualizar(Lancamento lancamentos ) {
         daoLancamento.Atualizar(lancamentos);
     }  
      
-      public void Deletar(int lancamentoId) {
+    public void Deletar(int lancamentoId) {
         daoLancamento.Deletar(lancamentoId);
     } 
 }        

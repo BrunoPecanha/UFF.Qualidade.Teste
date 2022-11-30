@@ -47,7 +47,7 @@ public class LancamentoController extends HttpServlet {
         }
         else {
             int usuario = parseInt(request.getParameter("id"));
-            ResumoDto resumo = lancamentoServico.CarregarResumoLancamentos(usuario);
+            ResumoDto resumo = lancamentoServico.GerarResumoLancamentos(usuario);
                  
             request.setAttribute("debitos", resumo.debitos);
             request.setAttribute("creditos",  resumo.creditos);
@@ -74,7 +74,7 @@ public class LancamentoController extends HttpServlet {
             if (acao.equalsIgnoreCase("salvar")){   
                 
                 if (lancamentoServico.LancamentoJaExiste(token)) {
-                    ResumoDto resumo = lancamentoServico.CarregarResumoLancamentos(usuario); // Pegar id do usuario
+                    ResumoDto resumo = lancamentoServico.GerarResumoLancamentos(usuario); // Pegar id do usuario
 
                     request.setAttribute("debitos", resumo.debitos);
                     request.setAttribute("creditos",  resumo.creditos);
@@ -113,10 +113,10 @@ public class LancamentoController extends HttpServlet {
                 lancamentoServico.Deletar(id);                         
            }            
             else if (acao.equalsIgnoreCase("processar")){
-                lancamentoServico.Processar(usuario);
+                lancamentoServico.ProcessarLancamento(usuario);
             }
 
-            ResumoDto resumo = lancamentoServico.CarregarResumoLancamentos(usuario); // Pegar id do usuario
+            ResumoDto resumo = lancamentoServico.GerarResumoLancamentos(usuario); // Pegar id do usuario
 
             request.setAttribute("debitos", resumo.debitos);
             request.setAttribute("creditos",  resumo.creditos);

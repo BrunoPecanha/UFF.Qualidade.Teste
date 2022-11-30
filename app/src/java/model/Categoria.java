@@ -27,7 +27,7 @@ public class Categoria {
         return this.descricao;
     }
     
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }    
+     public void setDescricao(String descricao) {
+       this.descricao = descricao.isEmpty() ? this.descricao : descricao;
+    }       
 }

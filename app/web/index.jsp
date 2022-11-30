@@ -29,7 +29,7 @@
                             de um banco. Ao acessar a aplicação essa contará com uma área pública 
                             (onde informações sobre a aplicação estarão disponíveis) e uma área privada 
                             (onde as funções do sistema estão disponíveis)</p>
-                        <a class="btn btn-primary btn-lg" href="login.jsp">Acessar à plataforma</a>
+                        <a class="btn btn-primary btn-lg" id="acessar" href="login.jsp">Acessar à plataforma</a>
                     </div>
                 </div>
             </div>

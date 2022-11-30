@@ -6,8 +6,7 @@ import model.Lancamento;
 
 public class ResumoDto {    
     public double debitos;
-    public double creditos; 
-    public double total;     
+    public double creditos;   
     public List<Lancamento> lancamentos;
     public List<Conta> contas;
     public List<CategoriaXPercentualDto> listaCategoriaXPercentual;

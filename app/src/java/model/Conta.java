@@ -6,8 +6,7 @@ public class Conta {
         this.descricao = descricao;        
         this.banco = banco;      
         this.agencia = agencia;
-        this.numeroConta = numeroConta;
-        
+        this.numeroConta = numeroConta;        
     }  
     
     public Conta(int id, int idUsuario, String descricao, String banco, String agencia, String numeroConta, String possuiLancamento) {
@@ -45,8 +44,8 @@ public class Conta {
         return this.descricao;
     }
     
-    public void setdescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao.isEmpty() ? this.descricao : descricao;
     }
     
     public String getBanco() {

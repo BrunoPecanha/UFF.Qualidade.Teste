@@ -43,8 +43,8 @@ public class Usuario {
     }
     
     public void setCPF(String cpf) {
-        if (String.valueOf(cpf).length() == 14)
-            this.cpf = cpf;
+        if (String.valueOf(cpf).length() == 14) 
+            this.cpf = cpf;          
     } 
     
     public String getSenha() {

@@ -49,7 +49,7 @@
                                         <button  value="Submit" disabled="true" type="submit" id="btnEntrar" class="btn btn-primary btn-user btn-block">
                                             Entrar
                                         </button>
-                                        <span style="color: red">
+                                        <span id="retorno" style="color: red">
                                         <%
                                             if(null!=request.getAttribute("errorMessage"))
                                             {

@@ -4,7 +4,6 @@ import dao.UsuarioDao;
 import dao.AdministradorDao;
 import dto.ResumoDto;
 import java.io.IOException;
-import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +67,7 @@ public class AutenticacaoController extends HttpServlet {
                  session.setAttribute("adm", "display: none");
                  session.setAttribute("usu", "display: normal");
 
-                ResumoDto resumo = servicoLancamento.CarregarResumoLancamentos(usuario.getId());
+                ResumoDto resumo = servicoLancamento.GerarResumoLancamentos(usuario.getId());
                 session.setAttribute("debitos", resumo.debitos); 
                 session.setAttribute("creditos", resumo.creditos);
                 session.setAttribute("total", resumo.creditos-resumo.debitos);    
