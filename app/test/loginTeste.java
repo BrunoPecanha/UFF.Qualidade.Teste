@@ -49,4 +49,14 @@ public class loginTeste {
         
         assertFalse(acessoValido);
     }
+    
+    @Test
+    public void Login_Com_Usuario_E_Senha_Validos(){
+        LoginDto logDto = _loginMock.obterLoginESenhaValidos();
+        Boolean acessoValido = Usuario.ValidarParametros(logDto.getUsuario(), logDto.getSenha());
+        
+        assertTrue(acessoValido);
+    }
 }
+
+
