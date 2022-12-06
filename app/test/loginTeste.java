@@ -1,3 +1,6 @@
+import dto.LoginDto;
+import mock.loginMock;
+import model.Usuario;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -7,7 +10,10 @@ import static org.junit.Assert.*;
 
 public class loginTeste {   
     
-    public loginTeste() {        
+    private loginMock _loginMock  = null;
+    
+    public loginTeste() {   
+        _loginMock = new loginMock();
     }
     
     @BeforeClass
@@ -19,24 +25,28 @@ public class loginTeste {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() {        
+        System.out.println("**--- Teste dos cenários executados  ---**");
     }
     
     @After
     public void tearDown() {
+        System.out.println("**--- Teste finalizados ---**");
     }
     
-    //Método de teste base
     @Test
-    public void soma() {
-        System.out.println("**--- Teste de soma executed ---**");
-
-        int num1 = 11;
-        int num2 = 12;
-        int expected = 23;
+    public void Login_Com_Senha_Em_Branco_E_Usuario_Preenchido() {
+        LoginDto logDto = _loginMock.obterLoginComSenhaEmBrancoEUsuarioPreenchido();
+        Boolean acessoValido = Usuario.ValidarParametros(logDto.getUsuario(), logDto.getSenha());
         
-        int actual = num1 + num2;
-
-        assertEquals(expected, actual);
+        assertFalse(acessoValido);
+    }
+    
+    @Test
+    public void Login_Com_Senha_Preechida_E_Usuario_Em_Branco() {
+        LoginDto logDto = _loginMock.obterLoginComSenhaPreenchidaEUsuarioEmBranco();
+        Boolean acessoValido = Usuario.ValidarParametros(logDto.getUsuario(), logDto.getSenha());
+        
+        assertFalse(acessoValido);
     }
 }
