@@ -44,6 +44,22 @@ public class usuarioTeste {
         Usuario usuario = _usuarioMock.obterUsuarioNaoSuspenso();
         assertTrue(usuario.getSuspenso().equals("N"));
     }
+    
+    @Test
+    public void Alterar_CPF_Para_Valor_Invalido() {
+        Usuario usuario = _usuarioMock.obterUsuarioValido();
+        usuario.setCPF("123.123.12");
+        
+        assertNotEquals(usuario.getCPF(), "123.123.12");
+    }
+    
+    @Test
+    public void Alterar_CPF_Para_Valor_Valido() {
+       Usuario usuario = _usuarioMock.obterUsuarioValido();
+        usuario.setCPF("853.383.897-20");
+        
+        assertEquals(usuario.getCPF(), "853.383.897-20");
+    }
 }
 
 

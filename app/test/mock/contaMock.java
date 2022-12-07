@@ -1,20 +1,15 @@
 package mock;
 
-import model.Usuario;
+import model.Conta;
 
-public class usuarioMock {
+public class contaMock {
     
-    public usuarioMock () {
+    public contaMock () {
     }    
         
-    // Usuário
+    // Conta
     
-    public Usuario obterUsuarioSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "S");
-    }   
-    
-    
-    public Usuario obterUsuarioNaoSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "N");
-    }  
+    public Conta obterContaValida() {
+        return new Conta(1, "Conta 1", "Bradesco", "0789", "145652");
+    }
 }

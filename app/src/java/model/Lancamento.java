@@ -11,6 +11,7 @@ public class Lancamento {
         this.operacao = operacao.toUpperCase();
         this.data = data;
         this.descricao = descricao;
+        this.processado = "N";
     }  
     
     public Lancamento(int id, int contaId, int categoriaId, double valor, String operacao, Date data, String descricao, String processado) {

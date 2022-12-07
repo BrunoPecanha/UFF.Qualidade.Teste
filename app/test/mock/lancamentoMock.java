@@ -1,20 +1,24 @@
 package mock;
 
-import model.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import model.Lancamento;
 
-public class usuarioMock {
+public class lancamentoMock {
     
-    public usuarioMock () {
+    public lancamentoMock () {
     }    
         
-    // Usuário
+    // Lançamento
     
-    public Usuario obterUsuarioSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "S");
-    }   
-    
-    
-    public Usuario obterUsuarioNaoSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "N");
-    }  
+    public List<Lancamento> obterLancamentosProcessados() {
+        
+        List<Lancamento> lancamentos = new ArrayList();  
+        lancamentos.add(new Lancamento(123, 1, 12.00, "D", new java.sql.Date(System.currentTimeMillis()), "Gasolina"));
+        lancamentos.add(new Lancamento(123, 2, 40.00, "D", new java.sql.Date(System.currentTimeMillis()), "Frutas"));
+        lancamentos.add(new Lancamento(123, 3, 100.00, "D", new java.sql.Date(System.currentTimeMillis()), "Luz"));
+        lancamentos.add(new Lancamento(123, 3, 80.00, "D", new java.sql.Date(System.currentTimeMillis()), "Água"));        
+      
+        return lancamentos;
+    }
 }

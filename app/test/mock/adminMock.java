@@ -1,20 +1,15 @@
 package mock;
 
-import model.Usuario;
+import model.Administrador;
 
-public class usuarioMock {
+public class adminMock {
     
-    public usuarioMock () {
+    public adminMock () {
     }    
         
-    // Usuário
+    // Administrador
     
-    public Usuario obterUsuarioSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "S");
-    }   
-    
-    
-    public Usuario obterUsuarioNaoSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "N");
-    }  
+     public Administrador obterAdminValido() {
+        return new Administrador("Peçanha", "136.766.167-66", "1234");
+    }
 }

@@ -1,5 +1,6 @@
-import mock.usuarioMock;
-import model.Usuario;
+
+import mock.contaMock;
+import model.Conta;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -7,42 +8,46 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class usuarioTeste {   
+public class contaTeste {   
     
-    private usuarioMock _usuarioMock;
+    private contaMock _contaMock;
     
-    public usuarioTeste() {   
-        _usuarioMock = new usuarioMock();
+    public contaTeste() {   
+        _contaMock = new contaMock();
     }
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("**--- Teste dos cenários executados  ---**");
     }
     
     @AfterClass
     public static void tearDownClass() {
+         System.out.println("**--- Teste finalizados ---**");
     }
     
     @Before
-    public void setUp() {        
-        System.out.println("**--- Teste dos cenários executados  ---**");
+    public void setUp() {       
     }
     
     @After
     public void tearDown() {
-        System.out.println("**--- Teste finalizados ---**");
+    }    
+  
+    @Test
+    public void Alterar_Descricao_Para_Valor_Valido() {
+        Conta conta = _contaMock.obterContaValida();
+        conta.setDescricao("Bradesco");
+        
+        assertEquals(conta.getDescricao(), "Bradesco");
     }
     
     @Test
-    public void Validar_Usuario_Suspenso() {
-        Usuario usuario = _usuarioMock.obterUsuarioSuspenso();
-        assertTrue(usuario.getSuspenso().equals("S"));
-    }
-    
-    @Test
-    public void Validar_Usuario_Nao_Suspenso() {
-        Usuario usuario = _usuarioMock.obterUsuarioNaoSuspenso();
-        assertTrue(usuario.getSuspenso().equals("N"));
+    public void Alterar_Descricao_Para_Valor_Invalido() {
+        Conta conta = _contaMock.obterContaValida();
+        conta.setDescricao("");
+        
+        assertNotEquals(conta.getDescricao(), "");
     }
 }
 

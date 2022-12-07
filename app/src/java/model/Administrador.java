@@ -27,8 +27,9 @@ public class Administrador {
         return this.nome;
     }
     
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String nome) {    
+        if(!nome.isEmpty())
+            this.nome = nome;
     }
     
     public String getCPF() {

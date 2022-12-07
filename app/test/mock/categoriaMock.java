@@ -1,20 +1,15 @@
 package mock;
 
-import model.Usuario;
+import model.Categoria;
 
-public class usuarioMock {
+public class categoriaMock {
     
-    public usuarioMock () {
+    public categoriaMock () {
     }    
         
-    // Usuário
+    // Categoria
     
-    public Usuario obterUsuarioSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "S");
-    }   
-    
-    
-    public Usuario obterUsuarioNaoSuspenso() {
-        return new Usuario("Bruno", "13676616766", "1234", "N");
-    }  
+     public Categoria obterCategoriaValida() {
+        return new Categoria("Mercado");
+    }
 }

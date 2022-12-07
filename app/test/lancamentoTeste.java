@@ -1,49 +1,78 @@
-import mock.usuarioMock;
-import model.Usuario;
+
+import java.util.List;
+import mock.lancamentoMock;
+import model.Lancamento;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import servicos.LancamentoService;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
-public class usuarioTeste {   
+
+public class lancamentoTeste {   
     
-    private usuarioMock _usuarioMock;
+    private lancamentoMock _lancamentoMock;
+    private LancamentoService _lancService;
     
-    public usuarioTeste() {   
-        _usuarioMock = new usuarioMock();
+    public lancamentoTeste() {   
+        _lancamentoMock = new lancamentoMock();
+        _lancService = new LancamentoService();
+        
     }
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("**--- Teste dos cenários executados  ---**");
     }
     
     @AfterClass
     public static void tearDownClass() {
+         System.out.println("**--- Teste finalizados ---**");
     }
     
     @Before
-    public void setUp() {        
-        System.out.println("**--- Teste dos cenários executados  ---**");
+    public void setUp() {       
     }
     
     @After
     public void tearDown() {
-        System.out.println("**--- Teste finalizados ---**");
+    }    
+  
+    @Test
+    public void Processar_Lancamentos() {
+        List<Lancamento> lancamentos = _lancamentoMock.obterLancamentosProcessados();
+        _lancService.ProcessarLancamentos(lancamentos);
+        
+        for (int i = 0; i < lancamentos.size(); i++) {
+            assertEquals("S", lancamentos.get(i).getProcessado());
+        }
     }
     
     @Test
-    public void Validar_Usuario_Suspenso() {
-        Usuario usuario = _usuarioMock.obterUsuarioSuspenso();
-        assertTrue(usuario.getSuspenso().equals("S"));
-    }
+	void testCalc() {
+		 List<Lancamento> lancamentos = _lancamentoMock.obterLancamentosProcessados();
+                _lancService.ProcessarLancamentos(lancamentos);
+
+	//	AddService addService;
+	//	CalcService calcService;
+
+		//addService = Mockito.mock(AddService.class);
+		//calcService = new CalcService(addService);
+
+		
+		String expected = "S";
+
+		when(lancamentos.get(1).getProcessado()).thenReturn("N");
+
+		String actual = "S";
+
+		assertEquals(expected, actual);
+
+	}    
     
-    @Test
-    public void Validar_Usuario_Nao_Suspenso() {
-        Usuario usuario = _usuarioMock.obterUsuarioNaoSuspenso();
-        assertTrue(usuario.getSuspenso().equals("N"));
-    }
 }
 
 

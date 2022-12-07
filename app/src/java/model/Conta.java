@@ -45,7 +45,8 @@ public class Conta {
     }
     
     public void setDescricao(String descricao) {
-        this.descricao = descricao.isEmpty() ? this.descricao : descricao;
+        if (!descricao.isEmpty())            
+            this.descricao = descricao;
     }
     
     public String getBanco() {
