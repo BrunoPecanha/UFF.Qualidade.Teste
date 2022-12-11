@@ -303,11 +303,11 @@
                   <form class="row g-3 needs-validation" novalidate>
                       <div class="col-md-6">
                         <label for="nomeValicacao" class="form-label">Nome</label>
-                        <label class="text-primary" for="nomeValicacao">${sessionScope.usuarioLogado.nome} - Id: ${sessionScope.usuarioLogado.id}</label>                          
+                        <label id="nomeValue" class="text-primary" for="nomeValicacao">${sessionScope.usuarioLogado.nome} - Id: ${sessionScope.usuarioLogado.id}</label>                          
                       </div>
                       <div class="col-md-5">
                         <label class="form-label">CPF</label>
-                        <label class="text-primary" class="form-label">${sessionScope.cpf}</label>
+                        <label id="cpfValue" class="text-primary" class="form-label">${sessionScope.cpf}</label>
                       </div>                       
                   </form>             
               </div>
