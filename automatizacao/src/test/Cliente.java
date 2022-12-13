@@ -1,3 +1,5 @@
+package test;
+
 import java.time.Duration;
 import org.junit.Test;
 import org.junit.Before;
