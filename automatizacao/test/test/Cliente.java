@@ -144,7 +144,10 @@ public class Cliente {
         
         tbodyContas = driver.findElement(By.id("t-body-contas"));
         
-        assertEquals(numberOfRows + 1, Integer.parseInt(tbodyContas.getAttribute("childElementCount")));
+        if (driver.findElements(By.className("dataTables_empty")).size() > 0) 
+            assertEquals(1, Integer.parseInt(tbodyContas.getAttribute("childElementCount")));
+        else
+            assertEquals(numberOfRows + 1, Integer.parseInt(tbodyContas.getAttribute("childElementCount")));
     }
     
     @Test
@@ -181,13 +184,21 @@ public class Cliente {
         
         driver.findElement(By.id("btn-conta-corrente")).click();
         
-        driver.findElement(By.cssSelector(".fa-trash-alt")).click();
+        WebElement tbodyContas = driver.findElement(By.id("t-body-contas"));
+        Integer numberOfRows = Integer.parseInt(tbodyContas.getAttribute("childElementCount"));
+        
+        driver.findElement(By.id("deletar")).click();
         
         new WebDriverWait(driver, Duration.ofMinutes(10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='exclusaoModal'][contains(@style, 'display: block')]")));
         
         driver.findElement(By.id("confirmar-delete")).click();
         
-        assertEquals(driver.findElement(By.className("dataTables_empty")).getText(), "Sem registros disponíveis");
+        tbodyContas = driver.findElement(By.id("t-body-contas"));
+        
+        if (driver.findElements(By.className("dataTables_empty")).size() > 0) 
+            assertEquals(driver.findElement(By.className("dataTables_empty")).getText(), "Sem registros disponíveis");
+        else
+            assertEquals(numberOfRows - 1, Integer.parseInt(tbodyContas.getAttribute("childElementCount")));
     }
     
     @Test
