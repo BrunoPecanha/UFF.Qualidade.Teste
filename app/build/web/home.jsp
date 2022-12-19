@@ -85,7 +85,7 @@
                 </div>            
 
                 <!-- Nav Item - Conta corrente -->
-                <li class="nav-item">
+                <li id="btn-conta-corrente" class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/ContaController?action=listconta&id=${sessionScope.idUsuarioLogado}&session=${sessionScope.usuarioLogado.nome}">
                         <i class="fas fa-university"></i>
                         <span>Conta Corrente</span></a>

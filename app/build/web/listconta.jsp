@@ -172,7 +172,7 @@
                             <p class="mb-4">Área para gerenciamento das contas do usuário do sistema.</p> 
                         </div>
                         <div class="col-md-1">
-                             <a href="#" onclick="carregarDadosEdicao('contasModalLabel', 'novo', 'Conta Corrente',  ['agencia', 'cc', 'descricao', 'bancos'], [ '<c:out value='${conta.agencia}'/>', '<c:out value='${conta.numeroConta}'/>', '<c:out value='${conta.descricao}'/>', '<c:out value='${conta.banco}'/>',])" data-toggle="modal" data-target="#contasModal">
+                             <a href="#" id="carregar-dados-edicao" onclick="carregarDadosEdicao('contasModalLabel', 'novo', 'Conta Corrente',  ['agencia', 'cc', 'descricao', 'bancos'], [ '<c:out value='${conta.agencia}'/>', '<c:out value='${conta.numeroConta}'/>', '<c:out value='${conta.descricao}'/>', '<c:out value='${conta.banco}'/>',])" data-toggle="modal" data-target="#contasModal">
                                 <i class="fas fa-4x fa-plus-circle"></i>                         
                             </a>
                             Adicionar
@@ -207,20 +207,20 @@
                                             <th></th>                                          
                                         </tr>
                                     </tfoot>
-                                   <tbody>                                       
+                                   <tbody id="t-body-contas">                                       
                                         <c:forEach items="${contas}" var="conta">
                                                 <tr>                                                         
-                                                    <td><c:out value="${conta.id}" /></td>   
-                                                    <td><c:out value="${conta.descricao}" /></td>  
-                                                    <td><c:out value="${conta.banco}" /></td> 
-                                                    <td><c:out value="${conta.agencia}" /></td>                                                
-                                                    <td><c:out value="${conta.numeroConta}" /></td>  
+                                                    <td id="conta-id"><c:out value="${conta.id}" /></td>   
+                                                    <td id="conta-descricao"><c:out value="${conta.descricao}" /></td>  
+                                                    <td id="conta-banco"><c:out value="${conta.banco}" /></td> 
+                                                    <td id="conta-agencia"><c:out value="${conta.agencia}" /></td>                                                
+                                                    <td id="conta-numero"><c:out value="${conta.numeroConta}" /></td>  
                                                     <td> 
                                                         <div class="text-center">
-                                                                <a href="#" onclick="carregarDadosEdicao('contasModalLabel', 'edit', 'Conta Corrente',  ['id_conta', 'agencia', 'cc', 'descricao', 'bancos'], [ '<c:out value='${conta.id}'/>', '<c:out value='${conta.agencia}'/>', '<c:out value='${conta.numeroConta}'/>', '<c:out value='${conta.descricao}'/>', '<c:out value='${conta.banco}'/>',])" data-toggle="modal" data-target="#contasModal">
+                                                                <a href="#" id="edit-conta" onclick="carregarDadosEdicao('contasModalLabel', 'edit', 'Conta Corrente',  ['id_conta', 'agencia', 'cc', 'descricao', 'bancos'], [ '<c:out value='${conta.id}'/>', '<c:out value='${conta.agencia}'/>', '<c:out value='${conta.numeroConta}'/>', '<c:out value='${conta.descricao}'/>', '<c:out value='${conta.banco}'/>',])" data-toggle="modal" data-target="#contasModal">
                                                                     <i class="fas fa-1x fa-edit pr-1"></i>                       
                                                                 </a>
-                                                                <a  style="display:<c:out value="${conta.possuiLancamento}" />" href="#" data-toggle="modal" onclick="carregarDadosEdicao('contaLabel', 'delete', 'Categoria', ['id_exclusao'], [ '<c:out value='${conta.id}'/>'])"   data-target="#exclusaoModal">
+                                                                <a  style="display:<c:out value="${conta.possuiLancamento}" />" href="#" id="deletar" data-toggle="modal" onclick="carregarDadosEdicao('contaLabel', 'delete', 'Categoria', ['id_exclusao'], [ '<c:out value='${conta.id}'/>'])"   data-target="#exclusaoModal">
                                                                                 <i class="fas fa-1x fa-trash-alt"></i>                    
                                                                 </a>
                                                         </div>                                                           
@@ -322,7 +322,7 @@
                         </div>
                         <div class="modal-footer">
                             <button id="gravar" class="btn btn-primary" value="Submit" type="submit">Gravar</button>
-                           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                    
+                           <button id="cancelar-gravacao" class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>                    
                         </div>  
                     </form>  
                 </div>
@@ -348,7 +348,7 @@
                           <input  name="id_exclusao" class="form-control" type="hidden"  value="<c:out value="${conta.id}"/>" id="id_exclusao">   
                           <div class="modal-footer">
                               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                              <button class="btn btn-primary"  value="Submit" type="submit">Confirmar</button>
+                              <button id="confirmar-delete" class="btn btn-primary"  value="Submit" type="submit">Confirmar</button>
                           </div>
                       </form>
                   </div>
