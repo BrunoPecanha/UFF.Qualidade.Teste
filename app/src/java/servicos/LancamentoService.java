@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Lancamento;
 
-public class LancamentoService  {
+public class LancamentoService implements ILancamentoService  {
     private final LancamentoDao daoLancamento;
     private final ContaDao daoConta;
     
@@ -16,6 +16,7 @@ public class LancamentoService  {
         daoConta = new ContaDao();       
     }
     
+    @Override
     public ResumoDto GerarResumoLancamentos(int idUsuario) 
     {  
         ResumoDto resumo = ProcessarLancamentos(daoLancamento.RecuperarLancamentosUsuario(idUsuario));
@@ -25,6 +26,7 @@ public class LancamentoService  {
         return resumo;
     }
     
+    @Override
     public ResumoDto ProcessarLancamentos(List<Lancamento> lancamentos) {
         ResumoDto resumo = new ResumoDto();
         resumo.lancamentos = lancamentos;            
@@ -40,6 +42,7 @@ public class LancamentoService  {
         return resumo;
     }    
     
+    @Override
     public List<Lancamento> GerarBaixaLancamento(List<Lancamento> lancamentos) {         
          for (int i = 0; i <= lancamentos.size()-1; i++) {
                 lancamentos.get(i).processarLancamento();
@@ -48,24 +51,34 @@ public class LancamentoService  {
          return lancamentos;
     }
     
+    @Override
     public void ProcessarLancamento(int id) {
         List<Lancamento> lancamentos = daoLancamento.RecuperarLancamentosUsuario(id); 
         this.GerarBaixaLancamento(lancamentos);
     }
     
     // Para corrigir um bug de session ao atualizar a tela
+    @Override
     public Boolean LancamentoJaExiste(String token) {
         return daoLancamento.LancamentoJaExiste(token);
     }
     
+    @Override
+     public List<Lancamento> RecuperarLancamentos(int idUsuario) {
+        return daoLancamento.RecuperarLancamentosUsuario(idUsuario);
+    } 
+    
+    @Override
     public void Salvar(Lancamento lancamentos, String token) {
         daoLancamento.Salvar(lancamentos, token);
     }
     
+    @Override
     public void Atualizar(Lancamento lancamentos ) {
         daoLancamento.Atualizar(lancamentos);
     }  
      
+    @Override
     public void Deletar(int lancamentoId) {
         daoLancamento.Deletar(lancamentoId);
     } 
