@@ -109,12 +109,7 @@ public class ContaCorrenteTeste {
         
         driver.findElement(By.id("gravar")).click();
         
-        
-        // Validar se salvou
-        driver.findElement(By.id("edit-conta")).click();
-        
-        
-        assertEquals("teste edicao", driver.findElement(By.id("descricao")).getText());
+        assertEquals("teste edicao", driver.findElement(By.id("conta-descricao")).getText());
     }
     
     @Test
