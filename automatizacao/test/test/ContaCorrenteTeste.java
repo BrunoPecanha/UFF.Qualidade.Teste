@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import static org.junit.Assert.*;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Cliente {
+public class ContaCorrenteTeste {
 
     private WebDriver driver;
     private JavascriptExecutor jse;
@@ -31,63 +30,7 @@ public class Cliente {
     public void tearDown() {
         driver.quit();
     }
-
-    @Test
-    public void realizarLoginSucesso() {
-        login("12345678910", "1234");
-
-        assertEquals(driver.getTitle(), "Financeiro - UFF - Principal");
-
-        driver.quit();
-    }
-    
-    @Test
-    public void realizarLoginFalha() {
-        login("12345678910", "1235");
-        
-        assertEquals(driver.findElement(By.id("retorno")).getText(), "Nome ou senha inválidos");
-    }
-
-    @Test
-    public void realizarLoginSemNome() {
-        login("", "1234");
-        
-        assertEquals(driver.findElement(By.id("btnEntrar")).isEnabled(), false);
-    }
-    
-    @Test
-    public void realizarLoginSemSenha() {
-        login("12345678910", "");
-        
-        assertEquals(driver.findElement(By.id("btnEntrar")).isEnabled(), false);
-    }
-    
-    @Test
-    public void validarDadosUsuarioLogado() {
-        String cpf = "12345678910"; //cpf do usuário [nome=Homem de Ferro, id=1]
-        
-        login(cpf, "1234");
-        
-        driver.findElement(By.id("userDropdown")).click();
-        driver.findElement(By.id("perfil")).click();
-        new WebDriverWait(driver, Duration.ofMinutes(10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='perfilModal'][contains(@style, 'display: block')]")));
-        
-        assertEquals(driver.findElement(By.id("nomeValue")).getText(), "Homem de Ferro - Id: 1");
-        assertEquals(driver.findElement(By.id("cpfValue")).getText(), cpf);
-    }
-    
-    @Test
-    public void encerrarSessão() {
-        login("12345678910", "1234");
-        
-        driver.findElement(By.id("userDropdown")).click();
-        driver.findElement(By.id("sair")).click();
-        new WebDriverWait(driver, Duration.ofMinutes(10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='logoutModal'][contains(@style, 'display: block')]")));
-        driver.findElement(By.linkText("Sair")).click();
-        
-        assertEquals(driver.getTitle(), "Financeiro - UFF");
-    }
-    
+   
     @Test
     public void acessoContaCorrente() {
         login("12345678910", "1234");
@@ -166,7 +109,12 @@ public class Cliente {
         
         driver.findElement(By.id("gravar")).click();
         
-        assertEquals(driver.findElement(By.id("conta-descricao")).getText(), "teste edicao");
+        
+        // Validar se salvou
+        driver.findElement(By.id("edit-conta")).click();
+        
+        
+        assertEquals("teste edicao", driver.findElement(By.id("descricao")).getText());
     }
     
     @Test
@@ -229,7 +177,7 @@ public class Cliente {
         WebElement tbodyContas = driver.findElement(By.id("t-body-contas"));
         Integer numberOfRows = Integer.parseInt(tbodyContas.getAttribute("childElementCount"));
         
-        assert(numberOfRows > 10 && numberOfRows <= 25);
+        assertTrue(numberOfRows > 10 && numberOfRows <= 25);
     }
     
     private void login(String cpf, String senha) {

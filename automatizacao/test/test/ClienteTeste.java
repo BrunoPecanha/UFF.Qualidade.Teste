@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import static org.junit.Assert.*;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Cliente {
+public class ClienteTeste {
 
     private WebDriver driver;
     private JavascriptExecutor jse;
@@ -229,7 +228,7 @@ public class Cliente {
         WebElement tbodyContas = driver.findElement(By.id("t-body-contas"));
         Integer numberOfRows = Integer.parseInt(tbodyContas.getAttribute("childElementCount"));
         
-        assert(numberOfRows > 10 && numberOfRows <= 25);
+        assertTrue(numberOfRows > 10 && numberOfRows <= 25);
     }
     
     private void login(String cpf, String senha) {
@@ -240,4 +239,22 @@ public class Cliente {
         driver.findElement(By.id("senha")).sendKeys(senha);
         driver.findElement(By.id("btnEntrar")).click();
     }
+    
+//    @Test
+//    public void Teste_Todos_Os_Cenarios_Cliente() {
+//        this.realizarLoginSucesso();
+//        this.realizarLoginFalha();
+//        this.realizarLoginSemNome();
+//        this.realizarLoginSemSenha();
+//        this.validarDadosUsuarioLogado();
+//        this.encerrarSessão();
+//        this.acessoContaCorrente();
+//        this.modalContaCorrente();
+//        this.adicionarContaCorrente();
+//        this.editarContaCorrente();
+//        this.deletarContaCorrenteComLancamento();
+//        this.deletarContaCorrenteSemLancamento();
+//        this.paginacaoContaCorrente();
+//        this.mudarQuantidadeRegistrosContaCorrent();    
+//    }    
 }
