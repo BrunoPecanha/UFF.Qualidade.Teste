@@ -203,7 +203,7 @@
                                             <th></th>                                       
                                         </tr>
                                     </tfoot>
-                                    <tbody>                                       
+                                    <tbody id="t-body-admin">                                       
                                         <c:forEach items="${admins}" var="admin">
                                             <tr>
                                                 <td><c:out value="${admin.id}" /></td>                                                

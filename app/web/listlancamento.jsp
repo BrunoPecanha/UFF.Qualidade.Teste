@@ -234,7 +234,7 @@
                                             <th></th>                                                                          
                                         </tr>
                                     </tfoot>
-                                   <tbody>                                       
+                                   <tbody id="t-body-lancamentos">                                       
                                         <c:forEach items="${lancamentos}" var="lancamento">
                                                 <tr>                                                         
                                                     <td><c:out value="${lancamento.id}" /></td>   
