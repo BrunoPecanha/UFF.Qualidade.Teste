@@ -61,7 +61,7 @@
             <!-- Item de navegação - Funcionalidades do menu colapsado -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                    aria-expanded="true" aria-controls="collapseUtilities" id="gerenciar-acessos-link">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Gerenciar Acessos</span>
                 </a>
@@ -69,8 +69,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gerenciamentos</h6>
-                        <a class="collapse-item" href="${pageContext.request.contextPath}/UsuarioController?action=listusuario?session=${sessionScope.usuarioLogado.nome}">Usuários</a>      
-                       <a class="collapse-item" href="${pageContext.request.contextPath}/AdminController?action=listadmin">Administradores</a>                                
+                        <a id="usuario-link" class="collapse-item" href="${pageContext.request.contextPath}/UsuarioController?action=listusuario?session=${sessionScope.usuarioLogado.nome}">Usuários</a>      
+                       <a id="admin-link" class="collapse-item" href="${pageContext.request.contextPath}/AdminController?action=listadmin">Administradores</a>                                
                     </div>
                 </div>
             </li>
