@@ -207,7 +207,7 @@
                                             <th></th>
                                         </tr>
                                     </tfoot>
-                                   <tbody>                                       
+                                   <tbody id="t-body-usuario">                                       
                                         <c:forEach items="${usuarios}" var="usuario">
                                             <tr>
                                                 <td><c:out value="${usuario.id}" /></td>                                                
@@ -271,7 +271,7 @@
                 <div class="modal-body">Tem certeza que deseja sair?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                     <a class="btn btn-primary" href="${pageContext.request.contextPath}/AutenticacaoController?deslogar=sim">Sair</a>
+                     <a id="confirm-sair" class="btn btn-primary" href="${pageContext.request.contextPath}/AutenticacaoController?deslogar=sim">Sair</a>
                 </div>
             </div>
         </div>
